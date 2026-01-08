@@ -2,14 +2,16 @@
 
 import os
 import json
+from decouple import config
 import google.generativeai as genai
 from typing import Dict, List
 
 class GeminiRoadmapGenerator:
     def __init__(self):
-        # Configure Gemini API
-        genai.configure(api_key=os.environ.get('GOOGLE_API_KEY'))
-        self.model = genai.GenerativeModel('gemini-pro')
+        # Configure Gemini API using python-decouple
+        api_key = config('GOOGLE_API_KEY')
+        genai.configure(api_key=api_key)
+        self.model = genai.GenerativeModel('gemini-1.5-flash')
     
     def generate_roadmap(self, goal_data: Dict) -> Dict:
         """
